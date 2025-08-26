@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
     public SpriteRenderer playerSR;
     public float speed;
 
+    // TEMP ACCESS TO PLAYER CAMERA & FLASHLIGHT -- REMOVE ON MERGE
+    public Camera _cam;
+    public Flashlight _light;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,7 +19,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // TEMP FLASHLIGHT MOVEMENT FOR PLAYER -- REMOVE ON MERGE
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 playerPos = playerRB.position;
+        Vector2 dir = (mouseWorld - playerPos); 
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        _light.angle = angle + _light.fov / 2f;
     }
 
     // physics loop for movement
