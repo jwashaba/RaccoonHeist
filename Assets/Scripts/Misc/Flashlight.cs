@@ -8,6 +8,7 @@ public class Flashlight : MonoBehaviour
 
     [SerializeField] public float angle = 90f;
     [SerializeField] public float fov = 90f;
+    [SerializeField] public float viewDistance = 5f;
     
     private MeshFilter _mf;
     private Mesh _mesh;
@@ -27,7 +28,6 @@ public class Flashlight : MonoBehaviour
         Vector3 origin = _rb.position;
         float localAngle = angle;
         float angleIncrease = fov / rayCount;
-        float viewDistance = 3f;
         
         Vector3[] vertices = new Vector3[rayCount + 2];
         Vector2[] uv = new Vector2[vertices.Length];
