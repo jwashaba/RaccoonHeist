@@ -9,7 +9,7 @@ public class InteractionManager : MonoBehaviour
     // Create functions for different types of interactables
     public void door()
     {
-
+        return;
     }
     public void biscuit()
     {

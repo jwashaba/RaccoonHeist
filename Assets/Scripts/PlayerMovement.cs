@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashDir = Vector2.down;
 
     // TEMP ACCESS TO PLAYER CAMERA & FLASHLIGHT -- REMOVE ON MERGE
-    public Camera _cam;
-    public Flashlight _light;
-
+    // public Camera _cam;
+    // public Flashlight _light;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // stop ANY non-time-based controller inputs/processes when game paused
+        if (SceneManager.Instance.gameIsPaused) return;
+        Debug.Log("i still run");
+        
         // TEMP FLASHLIGHT MOVEMENT FOR PLAYER -- REMOVE ON MERGE
         // Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Vector3 playerPos = playerRB.position;
