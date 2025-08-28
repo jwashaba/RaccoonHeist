@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // stop ANY non-time-based controller inputs/processes when game paused
         if (SceneManager.Instance.gameIsPaused) return;
-        Debug.Log("i still run");
         
         // TEMP FLASHLIGHT MOVEMENT FOR PLAYER -- REMOVE ON MERGE
         // Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
