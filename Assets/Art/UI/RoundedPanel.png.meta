@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ab6e2f5dad7e0bb43b284bbc5d2680ea
+guid: 5980673a6d2e2ce458d73aa7e88f7781
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8426817888908902439
-    second: guard_0
+      213: 5001757994501424965
+    second: RoundedPanel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: guard_0
+      name: RoundedPanel_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 840
-        height: 925
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 32, y: 32, z: 32, w: 32}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7208257093212f470800000000000000
-      internalID: 8426817888908902439
+      spriteID: 5474ab24560d96540800000000000000
+      internalID: 5001757994501424965
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3daab9b06f2aa184bb9a21cc21937409
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      guard_0: 8426817888908902439
+      RoundedPanel_0: 5001757994501424965
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
