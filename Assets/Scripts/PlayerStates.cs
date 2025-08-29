@@ -57,19 +57,19 @@ public class PlayerStates : MonoBehaviour
     {
         if (weight == 1)
         {
-            movSpeed.speed = 3;
+            movSpeed.moveSpeed = 3;
         }
         else if (weight == 2)
         {
-            movSpeed.speed = 2;
+            movSpeed.moveSpeed = 2;
         }
         else if (weight == 3)
         {
-            movSpeed.speed = 1;
+            movSpeed.moveSpeed = 1;
         }
         else if (weight == 4)
         {
-            movSpeed.speed = 0;
+            movSpeed.moveSpeed = 0;
         }
     }
 

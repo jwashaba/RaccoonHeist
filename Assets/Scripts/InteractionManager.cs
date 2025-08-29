@@ -7,9 +7,11 @@ public class InteractionManager : MonoBehaviour
     public PlayerStates playerStates;
 
     // Create functions for different types of interactables
-    public void door()
+    public void bench()
     {
-
+        playerStates.hiddenStatus = true;
+        playerStates.detectStat = 0;
+        Debug.Log("stat change");
     }
     public void biscuit()
     {
