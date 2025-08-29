@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - character
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - UI
   - Lightmasker
   - Character
-  - 
+  - Bench
   - 
   - 
   - 
@@ -40,6 +41,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3370473197
+    locked: 0
+  - name: Background
+    uniqueID: 3743727839
+    locked: 0
+  - name: Bench
+    uniqueID: 90321895
     locked: 0
   m_RenderingLayers:
   - Default
