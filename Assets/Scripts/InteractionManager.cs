@@ -18,9 +18,10 @@ public class InteractionManager : MonoBehaviour
     }
     
     // Create functions for different types of interactables
-    public void door()
+    public void bench()
     {
-        return;
+        playerStates.detectStat = 0;
+        Debug.Log("stat change");
     }
     public void biscuit()
     {
