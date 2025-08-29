@@ -9,7 +9,6 @@ public class InteractionManager : MonoBehaviour
     // Create functions for different types of interactables
     public void bench()
     {
-        playerStates.hiddenStatus = true;
         playerStates.detectStat = 0;
         Debug.Log("stat change");
     }

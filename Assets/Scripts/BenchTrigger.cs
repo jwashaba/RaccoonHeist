@@ -16,7 +16,14 @@ public class BenchTrigger : MonoBehaviour
             Interact();
         }
     }
-   
+
+       void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("character"))
+        {
+            Debug.Log("You Left");
+        }
+    }
     // Define Interaction and call function from interaction manager
     public virtual void Interact()
     {
