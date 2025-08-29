@@ -25,8 +25,9 @@ public class Interactable : MonoBehaviour
         float distance = Vector3.Distance(player.position, transform.position);
         if (distance <= area)
         {
-            if(Input.GetKeyUp(KeyCode.E)) 
+            if (Input.GetKeyDown(KeyCode.E) && interactionManager.TryConsumeInteractPress()) 
             {
+                Debug.Log(distance);
                 hasInteracted = true;
                 Interact();
             }
