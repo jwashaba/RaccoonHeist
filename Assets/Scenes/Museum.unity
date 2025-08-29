@@ -2289,6 +2289,71 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &304210886
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 689657203711489279, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: interactionManager
+      value: 
+      objectReference: {fileID: 1620426615}
+    - target: {fileID: 713763974419346038, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_Name
+      value: Bench
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202328047743769541, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5915353956658355934, guid: 9b264ea0517803946bea770e4965827b, type: 3}
+      propertyPath: pStates
+      value: 
+      objectReference: {fileID: 1620426614}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b264ea0517803946bea770e4965827b, type: 3}
 --- !u!1 &389869321
 GameObject:
   m_ObjectHideFlags: 0
@@ -14029,7 +14094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movSpeed: {fileID: 1620426613}
-  weight: 1
+  weight: 3
   biscuitsAte: 0
   hiddenStatus: 1
   detectStat: 0
@@ -33548,3 +33613,4 @@ SceneRoots:
   - {fileID: 1509837203}
   - {fileID: 1333345746}
   - {fileID: 1844402339}
+  - {fileID: 304210886}
