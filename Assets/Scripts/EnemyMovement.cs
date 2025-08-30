@@ -19,6 +19,7 @@ public class EnemyMovement : MonoBehaviour
 
     // navmesh chasing stuff
     public Transform player;
+    public PlayerStates pstates;
     public float chaseSpeed;
     public float chaseRadius; // to be removed and switched to flashlight cone?
     public float escapeDist;
@@ -35,10 +36,18 @@ public class EnemyMovement : MonoBehaviour
     public Sprite idleRight;
     public Sprite idleDown;
     public Sprite idleLeft;
-
+    
+    public Flashlight flashlight;
+    [SerializeField] Transform indicatorTransform;
+    [SerializeField] SpriteRenderer indicatorSR;
+    private float flashlightAngle;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // indicatorTransform = transform.Find("ChildName/Indicator");
+        // indicatorSR = indicatorTransform.GetComponent<SpriteRenderer>();
+        
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -54,14 +63,58 @@ public class EnemyMovement : MonoBehaviour
         animator.SetInteger("facingDirection", 2);
     }
 
+    void SetFlashlightDirectionWhenAgent()
+    {
+        if (agent.velocity.sqrMagnitude > 0.0001f)
+        {
+            flashlight.angle = Mathf.Atan2(agent.velocity.y, agent.velocity.x) * Mathf.Rad2Deg + 45f;
+        }
+    }
+    
+        
+    void SetIdle()
+    {
+        if (animator.enabled) animator.enabled = false;
+
+        int f = animator.GetInteger("facingDirection");
+        switch (f)
+        {
+            case 0: enemySR.sprite = idleUp;    break;
+            case 1: enemySR.sprite = idleRight; break;
+            case 2: enemySR.sprite = idleDown;  break;
+            case 3: enemySR.sprite = idleLeft;  break;
+        }
+        Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
+    }
+
+    void SetWalking(int facing)
+    {
+        if (!animator.enabled) animator.enabled = true;
+        animator.SetBool("isWalking", true);
+        animator.SetInteger("facingDirection", facing);
+    }
+    
     // Update is called once per frame
     void Update()
     {
+        // VISUAL INDICATOR ANIMATIONS
+        if (isChasing)
+        {
+            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
+            // pulse goes 0 → 1
+            float scale = Mathf.Lerp(2f, 3f, pulse);
+            indicatorTransform.localScale = new Vector3(scale, scale, 1f);
+        }
+        else
+        {
+            indicatorTransform.localScale = new Vector3(0f, 0f, 1f);
+        }
+        
         distToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (!isChasing && !isReturningToPatrol)
         {
-            if (distToPlayer <= chaseRadius)
+            if (distToPlayer <= chaseRadius && pstates.detection >= 1f)
             {
                 Debug.Log("starting chase");
                 isChasing = true;
@@ -88,13 +141,17 @@ public class EnemyMovement : MonoBehaviour
             }
 
             distToPlayer = Vector2.Distance(transform.position, player.position);
+
+            SetFlashlightDirectionWhenAgent();
+
             if (distToPlayer <= catchDist)
             {
                 // oh no!
                 Debug.Log("player caught");
                 // load lose screen?   
             }
-            if (distToPlayer > escapeDist)
+
+            if (pstates.detection <= 0f)
             {
                 Debug.Log("ending chase");
                 isReturningToPatrol = true;
@@ -107,11 +164,22 @@ public class EnemyMovement : MonoBehaviour
 
                 return;
             }
+
             return;
         }
 
         if (isReturningToPatrol)
         {
+            // optional: face by agent velocity
+            Vector2 v = agent.velocity;
+            if (v.sqrMagnitude > 0.0001f)
+            {
+                int f = Mathf.Abs(v.x) >= Mathf.Abs(v.y) ? (v.x >= 0 ? 1 : 3) : (v.y >= 0 ? 0 : 2);
+                animator.SetInteger("facingDirection", f);
+            }
+
+            SetFlashlightDirectionWhenAgent();
+
             // If we somehow lost the agent, bail out to manual
             if (!agent.enabled || points.Length == 0)
             {
@@ -129,12 +197,13 @@ public class EnemyMovement : MonoBehaviour
                 agent.enabled = false;
 
                 isReturningToPatrol = false;
-                isWaiting = true;   // optional: pause at the node
+                isWaiting = true; // optional: pause at the node
                 waitTimer = 0f;
                 animator.SetBool("isWalking", false);
                 Debug.Log("idling 2");
                 SetIdle();
             }
+
             return;
         }
 
@@ -161,61 +230,55 @@ public class EnemyMovement : MonoBehaviour
                     currPoint += direction;
                 }
             }
+
             return;
         }
 
+
         Vector3 nextPoint = points[currPoint].position;
-        Vector3 diff = nextPoint - transform.position;
+        Vector2 diff = nextPoint - transform.position;
         float maxStep = moveSpeed * Time.deltaTime;
         float dist = diff.magnitude;
-        if (dist <= Math.Max(maxStep, threshold))
+
+        if (dist <= Mathf.Max(maxStep, threshold))
         {
+            // Snap to the point and stop
             transform.position = nextPoint;
             enemyRB.linearVelocity = Vector2.zero;
             isWaiting = true;
             return;
         }
 
-        Vector3 stepLength = diff.normalized * maxStep;
-        // if (stepLength.sqrMagnitude > dist.sqrMagnitude) stepLength = dist;
-        transform.position += stepLength;
-        // need to flip sprite?
-        if (Mathf.Abs(stepLength.x) > 0.001f)
+        // Normalize direction and set velocity
+        Vector2 dir = diff.normalized;
+        enemyRB.linearVelocity = dir * moveSpeed;
+
+        // move by physics velocity, not manual transform
+        // (the rigidbody handles actual position integration)
+        if (Mathf.Abs(dir.x) > 0.001f)
         {
-            SetWalking(stepLength.x > 0f ? 1 : 3);
+            SetWalking(dir.x > 0f ? 1 : 3);
         }
-        else if (Mathf.Abs(stepLength.y) > 0.001f)
+        else if (Mathf.Abs(dir.y) > 0.001f)
         {
-            SetWalking(stepLength.y > 0f ? 0 : 2);
+            SetWalking(dir.y > 0f ? 0 : 2);
         }
         else
         {
             animator.SetBool("isWalking", false);
             SetIdle();
         }
-    }
 
-    void SetIdle()
-    {
-        if (animator.enabled) animator.enabled = false;
-
-        int f = animator.GetInteger("facingDirection");
-        switch (f)
+        // update flashlight angle to match velocity direction
+        if (!isReturningToPatrol && !isChasing)
         {
-            case 0: enemySR.sprite = idleUp;    break;
-            case 1: enemySR.sprite = idleRight; break;
-            case 2: enemySR.sprite = idleDown;  break;
-            case 3: enemySR.sprite = idleLeft;  break;
+            if (enemyRB.linearVelocity.sqrMagnitude > 0.0001f)
+            {
+                flashlight.angle = Mathf.Atan2(enemyRB.linearVelocity.y, enemyRB.linearVelocity.x) * Mathf.Rad2Deg + 45f;
+            }
         }
-        Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
     }
-
-    void SetWalking(int facing)
-    {
-        if (!animator.enabled) animator.enabled = true;
-        animator.SetBool("isWalking", true);
-        animator.SetInteger("facingDirection", facing);
-    }
+}
 
 
     // void OnTriggerEnter2D(Collider2D other)
@@ -226,4 +289,3 @@ public class EnemyMovement : MonoBehaviour
     //     waitTimer = 0f;
     //     isWaiting = false;
     // }
-}

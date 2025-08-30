@@ -1131,6 +1131,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2324688519833869293, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225031564507583896, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: playerHUD
+      value: 
+      objectReference: {fileID: 1895038673}
+    - target: {fileID: 5758861889920392184, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -144.29999
+      objectReference: {fileID: 0}
     - target: {fileID: 6713053291422777344, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -1223,6 +1235,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816389044}
   m_CullTransparentMesh: 1
+--- !u!1 &1895038673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2324688519833869293, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+  m_PrefabInstance: {fileID: 1775637838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1898406779
 GameObject:
   m_ObjectHideFlags: 0

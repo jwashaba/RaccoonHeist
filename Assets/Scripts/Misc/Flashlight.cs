@@ -11,12 +11,16 @@ public class Flashlight : MonoBehaviour
     [SerializeField] public float fov = 90f;
     [SerializeField] public float viewDistance = 5f;
 
+    [SerializeField] private float turnSpeedDegPerSec = 360f; // lower = snappier
+    private float currentAngle = 90f;
+
     private MeshFilter _mf;
     private Mesh _mesh;
     private Rigidbody2D _rb;
     private PolygonCollider2D _col;
     // reference player states for guard detect
     public PlayerStates pstates;
+    public PlayerMovement player;
 
     void Start()
     {
@@ -28,10 +32,13 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        Vector3 origin = _rb.position;
-        float localAngle = angle;
+        Vector3 origin = new Vector3(_rb.position.x, _rb.position.y, 0f) + transform.localPosition;
+        currentAngle = Mathf.MoveTowardsAngle(currentAngle, angle, Time.deltaTime * turnSpeedDegPerSec);
+        float localAngle = currentAngle;
         float angleIncrease = fov / rayCount;
 
+        bool playerHitOnce = false;
+        
         Vector3[] vertices = new Vector3[rayCount + 2];
         Vector2[] uv = new Vector2[vertices.Length];
         int[] triangles = new int[rayCount * 3];
@@ -52,12 +59,12 @@ public class Flashlight : MonoBehaviour
             }
             else
             {
-                // If hits player
                 if (raycastHit2D.collider.gameObject.name == "Player")
                 {
-                    if (pstates.hiddenState == false)
+                    if (pstates.hiddenState == false && !playerHitOnce)
                     {
-                        pstates.detected = true;
+                        pstates.IncrementDetection((1f + (viewDistance - Mathf.Abs(Vector2.Distance(origin, player.transform.position)))));
+                        playerHitOnce = true;
                     }
                 }
                 vertex = new Vector3(raycastHit2D.point.x, raycastHit2D.point.y, 0) - origin;

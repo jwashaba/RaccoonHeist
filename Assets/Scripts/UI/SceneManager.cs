@@ -8,12 +8,24 @@ public class SceneManager : MonoBehaviour
     public static SceneManager Instance;
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject playerHUD;
     
     [SerializeField] private GameObject loadingMask;
 
     public bool pauseScreenAccessable = false;
     public bool gameIsPaused = false;
 
+    // HUD refs
+    [SerializeField] private RectTransform detectionIndicator;
+    [SerializeField] private Image         detectionProgress;
+    [SerializeField] private RectTransform hiddenIndicator;
+
+    // Player state ref (exists only in Museum)
+    public PlayerStates playerStates;
+
+    // UI animation speed (higher = snappier)
+    [SerializeField] private float hudLerpSpeed = 12f;
+    
     void Update()
     {
         if (!pauseScreenAccessable) return;
@@ -21,6 +33,62 @@ public class SceneManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SetGamePaused(!gameIsPaused);
+        }
+        
+        // VISUAL LERP UPDATES FOR HUD ELEMENTS
+        UpdateHud();
+    }
+    
+    private void AcquirePlayerStates()
+    {
+        // Try common patterns: tag, name, or fallback
+        var playerObj = GameObject.FindWithTag("Player");
+        if (playerObj == null) playerObj = GameObject.Find("Player");
+        if (playerObj == null)
+        {
+            playerStates = FindObjectOfType<PlayerStates>(); // last resort
+        }
+        else
+        {
+            playerStates = playerObj.GetComponent<PlayerStates>();
+        }
+    }
+    
+    private void UpdateHud()
+    {
+        // Attempt to reacquire once we’re in Museum and not yet found
+        if (playerStates == null && pauseScreenAccessable)
+            AcquirePlayerStates();
+
+        // Nothing to do if we still don't have states or UI refs aren't set
+        if (playerStates == null) return;
+
+        // Use unscaled time so UI animates even if Time.timeScale = 0
+        float t = 1f - Mathf.Exp(-hudLerpSpeed * Time.unscaledDeltaTime); // time-based lerp factor
+
+        // ----- Detection indicator -----
+        float detectTargetY = (playerStates.detection > 0f) ? 0f : -555f;
+
+        if (detectionIndicator != null)
+        {
+            var p = detectionIndicator.anchoredPosition;
+            p.y = Mathf.Lerp(p.y, detectTargetY, t);
+            detectionIndicator.anchoredPosition = p;
+        }
+
+        if (detectionProgress != null)
+        {
+            detectionProgress.fillAmount = Mathf.Clamp01(playerStates.detection);
+        }
+
+        // ----- Hidden indicator -----
+        float hiddenTargetY = (playerStates.hiddenState && playerStates.detection <= 0f) ? 0f : -555f;
+
+        if (hiddenIndicator != null)
+        {
+            var h = hiddenIndicator.anchoredPosition;
+            h.y = Mathf.Lerp(h.y, hiddenTargetY, t);
+            hiddenIndicator.anchoredPosition = h;
         }
     }
     
@@ -70,6 +138,8 @@ public class SceneManager : MonoBehaviour
                 SetGamePaused(false);
                 
                 pauseScreen.SetActive(false);
+                playerHUD.SetActive(false);
+                playerStates = null;
 
                 break;
             case "Museum":
@@ -77,6 +147,9 @@ public class SceneManager : MonoBehaviour
                 SetGamePaused(false);
                 
                 pauseScreen.SetActive(false);
+                playerHUD.SetActive(true);
+                AcquirePlayerStates();
+                
                 break;
         }
     }

@@ -13,7 +13,7 @@ public class PlayerStates : MonoBehaviour
     public int weight = 1;
     public int biscuitsAte = 0;
     public bool hiddenState = false;
-    public bool detected = false;
+    public float detection = 0f;
     private float CooldownTime = 0f;
 
     void Start()
@@ -24,12 +24,15 @@ public class PlayerStates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(detection);
+        
         if (hiddenState)
         {
             _sp.color = Color.grey;
         }
         else
         {
+            if (detection > 0f) detection -= Time.deltaTime;
             _sp.color = Color.white;
         }
         
@@ -78,6 +81,11 @@ public class PlayerStates : MonoBehaviour
         }
     }
 
+    public void IncrementDetection(float weight)
+    {
+        if (detection < 1f) detection += 2f * weight * Time.deltaTime;
+    }
+    
     //Create a function indicating states of weight phases
     void weightPhaseEffect(int weight)
     {
@@ -110,10 +118,6 @@ public class PlayerStates : MonoBehaviour
     // Create Gameover Check function
     void gameOverCheck()
     {
-        if (detected == true)
-        {
-            Debug.Log("Gameover!");
-            biscuitsAte = 5;
-        }
+        return;
     }
 }
