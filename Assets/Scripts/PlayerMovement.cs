@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed;
     public float dashTime;
     public float dashCooldown;
-    private bool canDash = true;
+    public bool canDash = true;
     private bool isDashing = false;
     private Vector2 dashDir = Vector2.down;
 
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -97,5 +97,12 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+    
+    public void SetMovementToZero()
+    {
+        moveInput = Vector2.zero;
+        playerRB.linearVelocity = Vector2.zero;
+        isDashing = false;
     }
 }

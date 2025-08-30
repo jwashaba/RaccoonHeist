@@ -21,12 +21,12 @@ public class Bench : MonoBehaviour
         // Note: Will add more later when doing qte
         if (pStates.weight == 1)
         {
-            GetComponent<Collider2D>().enabled = false;
+            // GetComponent<Collider2D>().enabled = false;
         }        
         else if (pStates.weight == 5)
         {
             // Turn on colider to stop
-            GetComponent<Collider2D>().enabled = true;
+            // GetComponent<Collider2D>().enabled = true;
         }
     }
  

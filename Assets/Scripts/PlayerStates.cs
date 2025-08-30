@@ -4,6 +4,8 @@ public class PlayerStates : MonoBehaviour
 {
     //Reference Player Movement
     public PlayerMovement movSpeed;
+    
+    private SpriteRenderer _sp;
 
     //Create a variable tracking weight phases
     //Create a variable tracking biscuits eaten
@@ -14,9 +16,23 @@ public class PlayerStates : MonoBehaviour
     public bool detected = false;
     private float CooldownTime = 0f;
 
+    void Start()
+    {
+        _sp = GetComponent<SpriteRenderer>();
+    }
+    
     // Update is called once per frame
     void Update()
     {
+        if (hiddenState)
+        {
+            _sp.color = Color.grey;
+        }
+        else
+        {
+            _sp.color = Color.white;
+        }
+        
         // Test key for biscuits eaten for now
         CooldownTime -= Time.deltaTime;
         if (Input.GetMouseButton(0) && CooldownTime <= 0f)

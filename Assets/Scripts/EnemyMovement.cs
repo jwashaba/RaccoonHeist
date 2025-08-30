@@ -53,7 +53,6 @@ public class EnemyMovement : MonoBehaviour
 
         if (!isChasing && !isReturningToPatrol)
         {
-            Debug.Log(Vector3.Distance(transform.position, agent.destination));
             if (distToPlayer <= chaseRadius)
             {
                 Debug.Log("starting chase");

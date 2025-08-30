@@ -15,12 +15,21 @@ public class BenchMash : MonoBehaviour
     // Create a function for when player enters hidden area
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("character"))
+        if (other.CompareTag("Player"))
             {
                 Debug.Log("Mash Area");
                 benchMash();
             }
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            pStates.hiddenState = false;
+        }
+    }
+    
     void Update()
     {
         // Mash base on key
@@ -34,20 +43,27 @@ public class BenchMash : MonoBehaviour
                     Debug.Log("Mashing");
                 }
             }
+            checkMashState();
         }
-        checkMashState();
     }
 
     // Function to mash when going into bench
     void benchMash()
     {
+        // if passed bench threshold
         if (pStates.biscuitsAte >= 1)
         {
             temp = pStates.biscuitsAte;
             count = 3 * pStates.weight;
             mashState = true;
-            pStates.biscuitsAte = 5;
+            pStates.biscuitsAte = 5; // set to some maximum that prevents player from moving
+            pStates.movSpeed.SetMovementToZero();
+            pStates.movSpeed.canDash = false;
             Debug.Log("Set");
+        }
+        else
+        {
+            pStates.hiddenState = true;
         }
     }
 
@@ -57,10 +73,9 @@ public class BenchMash : MonoBehaviour
         if (count == 0)
         {
             mashState = false;
-        }
-        else if (count == 1)
-        {
-            pStates.biscuitsAte = temp;
+            pStates.biscuitsAte = temp; // set back to previous biscuit quantity
+            pStates.movSpeed.canDash = true;
+            pStates.hiddenState = true;
         }
     }
 }
