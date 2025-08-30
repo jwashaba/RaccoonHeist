@@ -8,11 +8,10 @@ public class PlayerStates : MonoBehaviour
     //Create a variable tracking weight phases
     //Create a variable tracking biscuits eaten
     //Create a variable indicatiing hidden status
-    //Create a variable indicating detection 
     public int weight = 1;
     public int biscuitsAte = 0;
-    public bool hiddenStatus = true;
-    public int detectStat = 0;
+    public bool hiddenState = false;
+    public bool detected = false;
     private float CooldownTime = 0f;
 
     // Update is called once per frame
@@ -27,6 +26,9 @@ public class PlayerStates : MonoBehaviour
         }
         biscuitsAmt(biscuitsAte);
         weightPhaseEffect(weight);
+
+        // Game Over Check
+        gameOverCheck();
     }
 
     // Create a function that sets weight according to biscuits
@@ -50,6 +52,14 @@ public class PlayerStates : MonoBehaviour
         {
             weight = 4;
         }
+        else if (biscuits == 4)
+        {
+            weight = 5;
+        }
+        else if (biscuits == 5)
+        {
+            weight = 6;
+        }
     }
 
     //Create a function indicating states of weight phases
@@ -61,37 +71,33 @@ public class PlayerStates : MonoBehaviour
         }
         else if (weight == 2)
         {
-            movSpeed.moveSpeed = 2;
+            movSpeed.moveSpeed = 2.5f;
         }
         else if (weight == 3)
         {
-            movSpeed.moveSpeed = 1;
+            movSpeed.moveSpeed = 2f;
         }
         else if (weight == 4)
         {
-            movSpeed.moveSpeed = 0;
+            movSpeed.moveSpeed = 1.5f;
+        }
+        else if (weight == 5)
+        {
+            movSpeed.moveSpeed = 1f;
+        }
+        else if (weight == 6)
+        {
+            movSpeed.moveSpeed = 0f;
         }
     }
 
-    //Create a function checking detection status based on value
-    void checkDetectValue()
+    // Create Gameover Check function
+    void gameOverCheck()
     {
-        // Can discuss what other detection values do later
-        // Guard will get suspicious and follow towards the raccoon
-        if (detectStat == 4)
+        if (detected == true)
         {
-            // Make reference to guard which we don't have rn
+            Debug.Log("Gameover!");
+            biscuitsAte = 5;
         }
-
-        // Set 5 as the value to get caught
-        else if (detectStat == 5)
-        {
-            hiddenStatus = false;
-        }
-
     }
-    
-    /* Note: Later on when creating guard script, reference this script PlayerStates &
-    create a function that will inc and dec the detection value based on their fov. */
-
 }
