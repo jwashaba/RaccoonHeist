@@ -103,4 +103,7 @@ MonoBehaviour:
   area: 0.5
   player: {fileID: 0}
   interactionManager: {fileID: 0}
+  bisCase: {fileID: 0}
+  holdDuration: 0
+  isInteractableOnlyOnce: 0
   pairedVent: {fileID: 0}

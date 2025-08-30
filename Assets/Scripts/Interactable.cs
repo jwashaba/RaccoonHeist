@@ -17,6 +17,8 @@ public class Interactable : MonoBehaviour
     // Set Values for interact hold timer
     public float holdDuration = 0;
 
+    public bool isInteractableOnlyOnce;
+    
     // Make variable if obj has been interacted with
     bool hasInteracted = false;
 
@@ -24,26 +26,38 @@ public class Interactable : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(player.position, transform.position);
-        if (distance <= area)
+        if (distance <= area && ((!hasInteracted && isInteractableOnlyOnce) || !isInteractableOnlyOnce))
         {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("get it");
+                interactionManager.EnablePawIcon();
+            }
              if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
             {
                 Debug.Log("work");
-                if (holdDuration < 3)
+                if (holdDuration < 3f)
                 {
                     holdDuration += Time.deltaTime;
+                    interactionManager.SetPawIcon(holdDuration / 3f);
                     Debug.Log("Holding"); 
                 }
                 else
                 {
                     hasInteracted = true;
                     Interact();
+                    holdDuration = 0f;
+                    interactionManager.DisablePawIcon();
                 }
+            }
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                interactionManager.DisablePawIcon();
             }
         }
         if (hasInteracted == true)
         {
-            Destroy(bisCase);
+            if (bisCase) Destroy(bisCase);
         }
     }
 
