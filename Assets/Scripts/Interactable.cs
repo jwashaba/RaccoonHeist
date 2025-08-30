@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using NUnit.Framework;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
@@ -10,14 +12,13 @@ public class Interactable : MonoBehaviour
     public Transform player;
     public InteractionManager interactionManager;
 
+    // Reference biscuit case
+    public GameObject bisCase;
+    // Set Values for interact hold timer
+    public float holdDuration = 0;
+
     // Make variable if obj has been interacted with
     bool hasInteracted = false;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        return;
-    }
 
     // Update is called once per frame
     void Update()
@@ -25,12 +26,24 @@ public class Interactable : MonoBehaviour
         float distance = Vector3.Distance(player.position, transform.position);
         if (distance <= area)
         {
-            if (Input.GetKeyDown(KeyCode.E) && interactionManager.TryConsumeInteractPress()) 
+             if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
             {
-                Debug.Log(distance);
-                hasInteracted = true;
-                Interact();
+                Debug.Log("work");
+                if (holdDuration < 3)
+                {
+                    holdDuration += Time.deltaTime;
+                    Debug.Log("Holding"); 
+                }
+                else
+                {
+                    hasInteracted = true;
+                    Interact();
+                }
             }
+        }
+        if (hasInteracted == true)
+        {
+            Destroy(bisCase);
         }
     }
 
@@ -42,10 +55,12 @@ public class Interactable : MonoBehaviour
         interactionManager.biscuit();
     }
 
-     // Make function for color of area 
+    // Make function for color of area 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, area);
     }
+    
+
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System;
 
 public class EnemyMovement : MonoBehaviour
@@ -9,22 +10,79 @@ public class EnemyMovement : MonoBehaviour
     public float idleTime;
     public bool looping;
     public Transform[] points;
-
     public float threshold;
     private int currPoint = 0;
     private int direction = 1;
     private float waitTimer = 0f;
     private bool isWaiting = false;
 
+    // navmesh chasing stuff
+    public Transform player;
+    public float chaseSpeed;
+    public float chaseRadius; // to be removed and switched to flashlight cone?
+    public float escapeDist;
+    public float catchDist;
+    private float distToPlayer;
+    private bool isChasing = false;
+    private NavMeshAgent agent;
+
+    // private CircleCollider2D chaseTrigger;
+    private Vector2 facingDir = Vector2.down;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        agent.stoppingDistance = catchDist;
+        agent.speed = chaseSpeed;
+        agent.enabled = false;
 
+        // chaseTrigger = GetComponent<CircleCollider2D>();
+        // chaseTrigger.radius = chaseRadius;
+        // chaseTrigger.isTrigger = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        distToPlayer = Vector2.Distance(transform.position, player.position);
+
+        if (!isChasing)
+        {
+            if (distToPlayer <= chaseRadius)
+            {
+                Debug.Log("starting chase");
+                isChasing = true;
+                isWaiting = false;
+                waitTimer = 0f;
+                if (!agent.enabled) agent.enabled = true;
+            }
+        }
+        else
+        {
+            if (!agent.enabled) agent.enabled = true;
+            enemyRB.linearVelocity = Vector2.zero;
+            agent.SetDestination(player.position);
+            distToPlayer = Vector2.Distance(transform.position, player.position);
+            if (distToPlayer <= catchDist)
+            {
+                // oh no!
+                Debug.Log("player caught");
+                // load lose screen?   
+            }
+            if (distToPlayer > escapeDist)
+            {
+                Debug.Log("ending chase");
+                isChasing = false;
+                agent.ResetPath();
+                agent.enabled = false;
+                return;
+            }
+            return;
+        }
+
         if (isWaiting && points.Length > 0)
         {
             enemyRB.linearVelocity = Vector2.zero;
@@ -64,5 +122,27 @@ public class EnemyMovement : MonoBehaviour
         // if (stepLength.sqrMagnitude > dist.sqrMagnitude) stepLength = dist;
         transform.position += stepLength;
         // need to flip sprite?
+        if (Mathf.Abs(stepLength.x) > 0.1f)
+        {
+            if (stepLength.x > 0f)
+            {
+                enemySR.flipX = true;
+                facingDir = Vector2.right;
+            }
+            else
+            {
+                enemySR.flipX = false;
+                facingDir = Vector2.left;
+            }
+        }
     }
+
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.transform != player) return;
+    //     Debug.Log("collision detected with: " + other.name);
+    //     isChasing = true;
+    //     waitTimer = 0f;
+    //     isWaiting = false;
+    // }
 }
