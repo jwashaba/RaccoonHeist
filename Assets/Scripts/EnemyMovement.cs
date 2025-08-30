@@ -30,6 +30,11 @@ public class EnemyMovement : MonoBehaviour
 
     // private CircleCollider2D chaseTrigger;
     private Vector2 facingDir = Vector2.down;
+    public Animator animator;
+    public Sprite idleUp;
+    public Sprite idleRight;
+    public Sprite idleDown;
+    public Sprite idleLeft;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,6 +49,9 @@ public class EnemyMovement : MonoBehaviour
         // chaseTrigger = GetComponent<CircleCollider2D>();
         // chaseTrigger.radius = chaseRadius;
         // chaseTrigger.isTrigger = true;
+
+        animator = GetComponent<Animator>();
+        animator.SetInteger("facingDirection", 2);
     }
 
     // Update is called once per frame
@@ -53,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (!isChasing && !isReturningToPatrol)
         {
-            Debug.Log(Vector3.Distance(transform.position, agent.destination));
+            // Debug.Log(Vector3.Distance(transform.position, agent.destination));
             if (distToPlayer <= chaseRadius)
             {
                 Debug.Log("starting chase");
@@ -68,6 +76,18 @@ public class EnemyMovement : MonoBehaviour
             if (!agent.enabled) agent.enabled = true;
             enemyRB.linearVelocity = Vector2.zero;
             agent.SetDestination(player.position);
+
+            if (!animator.enabled) animator.enabled = true;
+            animator.SetBool("isWalking", true);
+
+            // optional: face by agent velocity
+            Vector2 v = agent.velocity;
+            if (v.sqrMagnitude > 0.0001f)
+            {
+                int f = Mathf.Abs(v.x) >= Mathf.Abs(v.y) ? (v.x >= 0 ? 1 : 3) : (v.y >= 0 ? 0 : 2);
+                animator.SetInteger("facingDirection", f);
+            }
+
             distToPlayer = Vector2.Distance(transform.position, player.position);
             if (distToPlayer <= catchDist)
             {
@@ -85,7 +105,7 @@ public class EnemyMovement : MonoBehaviour
 
                 Vector3 targetPatrolPos = points[currPoint].position;
                 agent.SetDestination(targetPatrolPos);
-                
+
                 return;
             }
             return;
@@ -101,7 +121,8 @@ public class EnemyMovement : MonoBehaviour
             }
 
             // When the agent reaches the patrol point, disable it and resume manual patrol
-            if (Vector3.Distance(agent.transform.position, agent.nextPosition) < 0.001f)
+            // if (Vector3.Distance(agent.transform.position, agent.nextPosition) < 0.001f)
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
                 // Snap to the agent's nextPosition for cleanliness
                 transform.position = agent.nextPosition;
@@ -111,13 +132,19 @@ public class EnemyMovement : MonoBehaviour
                 isReturningToPatrol = false;
                 isWaiting = true;   // optional: pause at the node
                 waitTimer = 0f;
+                animator.SetBool("isWalking", false);
+                Debug.Log("idling 2");
+                SetIdle();
             }
             return;
         }
-        
+
         if (isWaiting && points.Length > 0)
         {
             enemyRB.linearVelocity = Vector2.zero;
+            Debug.Log("idling 1");
+
+            SetIdle();
 
             waitTimer += Time.deltaTime;
             if (waitTimer >= idleTime)
@@ -154,20 +181,43 @@ public class EnemyMovement : MonoBehaviour
         // if (stepLength.sqrMagnitude > dist.sqrMagnitude) stepLength = dist;
         transform.position += stepLength;
         // need to flip sprite?
-        if (Mathf.Abs(stepLength.x) > 0.1f)
+        if (Mathf.Abs(stepLength.x) > 0.001f)
         {
-            if (stepLength.x > 0f)
-            {
-                enemySR.flipX = true;
-                facingDir = Vector2.right;
-            }
-            else
-            {
-                enemySR.flipX = false;
-                facingDir = Vector2.left;
-            }
+            SetWalking(stepLength.x > 0f ? 1 : 3);
+        }
+        else if (Mathf.Abs(stepLength.y) > 0.001f)
+        {
+            SetWalking(stepLength.y > 0f ? 0 : 2);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+            SetIdle();
         }
     }
+
+    void SetIdle()
+    {
+        if (animator.enabled) animator.enabled = false;
+
+        int f = animator.GetInteger("facingDirection");
+        switch (f)
+        {
+            case 0: enemySR.sprite = idleUp;    break;
+            case 1: enemySR.sprite = idleRight; break;
+            case 2: enemySR.sprite = idleDown;  break;
+            case 3: enemySR.sprite = idleLeft;  break;
+        }
+        Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
+    }
+
+    void SetWalking(int facing)
+    {
+        if (!animator.enabled) animator.enabled = true;
+        animator.SetBool("isWalking", true);
+        animator.SetInteger("facingDirection", facing);
+    }
+
 
     // void OnTriggerEnter2D(Collider2D other)
     // {
