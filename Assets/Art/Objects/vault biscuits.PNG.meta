@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e40907d6b10403544837deb61462b38c
+guid: 6c98a0e214b4b744b9d8b429ec5e5806
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1064988734043881895
-    second: raccoon_0
+      213: -310866794938156350
+    second: vault biscuits_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,17 +46,17 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.45746952, y: 0.17481841}
-  spritePixelsToUnits: 2048
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,41 +100,33 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: raccoon_0
+      name: vault biscuits_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 3500
-        height: 3500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 27
+        y: 135
+        width: 463
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5009567, y: 0.18807267}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a18a7e6c9997ce00800000000000000
-      internalID: 1064988734043881895
+      spriteID: 2ca3f3b0c449fabf0800000000000000
+      internalID: -310866794938156350
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline:
-    - - {x: 916, y: 17}
-      - {x: 896, y: -343}
-      - {x: 245, y: -744}
-      - {x: -620, y: -738}
-      - {x: -735, y: -480}
-      - {x: -741, y: 235}
-      - {x: -518, y: 729}
-      - {x: 301, y: 756}
+    outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 2c9cf592755058d43ab3cc60dff1e05a
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -143,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      raccoon_0: 1064988734043881895
+      vault biscuits_0: -310866794938156350
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
