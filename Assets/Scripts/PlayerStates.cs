@@ -24,7 +24,7 @@ public class PlayerStates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(detection);
+        // Debug.Log(detection);
         
         if (hiddenState)
         {

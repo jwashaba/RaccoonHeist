@@ -19,25 +19,44 @@ public class Interactable : MonoBehaviour
 
     // Make variable if obj has been interacted with
     bool hasInteracted = false;
+    bool soundPlayed = false;
 
     // Update is called once per frame
     void Update()
     {
         float distance = Vector3.Distance(player.position, transform.position);
-        if (distance <= area)
+        if (distance <= area && hasInteracted == false)
         {
-             if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
+            if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
             {
                 Debug.Log("work");
                 if (holdDuration < 3)
                 {
+                    if (soundPlayed == false)
+                    {
+                        SoundManager.Instance.Play(SoundManager.SoundType.BiscuitSwipe);
+                        
+                        soundPlayed = true;
+                    }
                     holdDuration += Time.deltaTime;
-                    Debug.Log("Holding"); 
+                    Debug.Log("Holding");
                 }
                 else
                 {
                     hasInteracted = true;
                     Interact();
+                }
+            }
+            else
+            {
+                holdDuration = 0;
+                soundPlayed = false;
+
+                // destroy sound once let go of e
+                GameObject obj = GameObject.Find("Sound_BiscuitSwipe");
+                if (soundPlayed == false)
+                {
+                    Destroy(obj);
                 }
             }
         }
@@ -61,6 +80,9 @@ public class Interactable : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, area);
     }
+
+    // Function for playing sound
+    
     
 
 }
