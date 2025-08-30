@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionManager : MonoBehaviour
 {
     private int _lastConsumedFrame = -1;
-    
+
     /*Reference player states, so values within it can
     be adjusted through the functions here*/
     public PlayerStates playerStates;
@@ -16,12 +16,17 @@ public class InteractionManager : MonoBehaviour
         _lastConsumedFrame = Time.frameCount;
         return true;
     }
-    
+
     // Create functions for different types of interactables
     public void bench()
     {
-        playerStates.detectStat = 0;
-        Debug.Log("stat change");
+        playerStates.hiddenState = true;
+        Debug.Log("You're Hidden");
+    }
+    public void leaveBench()
+    {
+        playerStates.hiddenState = false;
+        Debug.Log("You Left");
     }
     public void biscuit()
     {
