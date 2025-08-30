@@ -21,6 +21,7 @@ public class Interactable : MonoBehaviour
     
     // Make variable if obj has been interacted with
     bool hasInteracted = false;
+    bool soundPlayed = false;
 
     // Update is called once per frame
     void Update()
@@ -38,6 +39,12 @@ public class Interactable : MonoBehaviour
                 Debug.Log("work");
                 if (holdDuration < 3f)
                 {
+                    if (soundPlayed == false)
+                    {
+                        SoundManager.Instance.Play(SoundManager.SoundType.BiscuitSwipe);
+                        
+                        soundPlayed = true;
+                    }
                     holdDuration += Time.deltaTime;
                     interactionManager.SetPawIcon(holdDuration / 3f);
                     Debug.Log("Holding"); 
@@ -50,6 +57,19 @@ public class Interactable : MonoBehaviour
                     interactionManager.DisablePawIcon();
                 }
             }
+            else
+            {
+                holdDuration = 0;
+                soundPlayed = false;
+
+                // destroy sound once let go of e
+                GameObject obj = GameObject.Find("Sound_BiscuitSwipe");
+                if (soundPlayed == false)
+                {
+                    Destroy(obj);
+                }
+            }
+
             if (Input.GetKeyUp(KeyCode.E))
             {
                 interactionManager.DisablePawIcon();
@@ -75,6 +95,9 @@ public class Interactable : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, area);
     }
+
+    // Function for playing sound
+    
     
 
 }
