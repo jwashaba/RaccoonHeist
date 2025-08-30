@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using System.Runtime.CompilerServices;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class EnemyMovement : MonoBehaviour
     public float catchDist;
     private float distToPlayer;
     private bool isChasing = false;
+    private bool isReturningToPatrol = false; // returns to patrol via nav mesh agent, not by interpolating
     private NavMeshAgent agent;
 
     // private CircleCollider2D chaseTrigger;
@@ -49,8 +51,9 @@ public class EnemyMovement : MonoBehaviour
     {
         distToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (!isChasing)
+        if (!isChasing && !isReturningToPatrol)
         {
+            Debug.Log(Vector3.Distance(transform.position, agent.destination));
             if (distToPlayer <= chaseRadius)
             {
                 Debug.Log("starting chase");
@@ -60,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
                 if (!agent.enabled) agent.enabled = true;
             }
         }
-        else
+        else if (isChasing)
         {
             if (!agent.enabled) agent.enabled = true;
             enemyRB.linearVelocity = Vector2.zero;
@@ -75,14 +78,43 @@ public class EnemyMovement : MonoBehaviour
             if (distToPlayer > escapeDist)
             {
                 Debug.Log("ending chase");
+                isReturningToPatrol = true;
                 isChasing = false;
-                agent.ResetPath();
-                agent.enabled = false;
+                // agent.ResetPath();
+                // agent.enabled = false;
+
+                Vector3 targetPatrolPos = points[currPoint].position;
+                agent.SetDestination(targetPatrolPos);
+                
                 return;
             }
             return;
         }
 
+        if (isReturningToPatrol)
+        {
+            // If we somehow lost the agent, bail out to manual
+            if (!agent.enabled || points.Length == 0)
+            {
+                isReturningToPatrol = false;
+                return;
+            }
+
+            // When the agent reaches the patrol point, disable it and resume manual patrol
+            if (Vector3.Distance(agent.transform.position, agent.nextPosition) < 0.001f)
+            {
+                // Snap to the agent's nextPosition for cleanliness
+                transform.position = agent.nextPosition;
+                agent.ResetPath();
+                agent.enabled = false;
+
+                isReturningToPatrol = false;
+                isWaiting = true;   // optional: pause at the node
+                waitTimer = 0f;
+            }
+            return;
+        }
+        
         if (isWaiting && points.Length > 0)
         {
             enemyRB.linearVelocity = Vector2.zero;
