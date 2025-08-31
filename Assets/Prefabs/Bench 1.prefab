@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3189809495790571463}
   - component: {fileID: 1961518274455122862}
   - component: {fileID: 7982884981571756145}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Bench Mash Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6002148298658668835}
   - component: {fileID: 7146296172539693707}
   - component: {fileID: 4514141452509523268}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hidden Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

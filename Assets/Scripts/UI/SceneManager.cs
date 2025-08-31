@@ -9,6 +9,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject playerHUD;
+    [SerializeField] public BiscuitHudController BiscuitsHUD;
     
     [SerializeField] private GameObject loadingMask;
 
@@ -26,8 +27,44 @@ public class SceneManager : MonoBehaviour
     // UI animation speed (higher = snappier)
     [SerializeField] private float hudLerpSpeed = 12f;
     
+    // ===== Photo Placement UI =====
+    [SerializeField] private Image        darkenedBG;
+    [SerializeField] private RectTransform backgroundImageFrame;
+
+    // One Image per enum (drag in Inspector)
+    [SerializeField] private Image redPhoto;
+    [SerializeField] private Image bluePhoto;
+    [SerializeField] private Image tealPhoto;
+    [SerializeField] private Image greenPhoto;
+    [SerializeField] private Image yellowPhoto;
+    [SerializeField] private Image monaPhoto;
+
+    // Speeds
+    [SerializeField] private float photoLerpSpeed = 12f;
+    [SerializeField] private float frameLerpSpeed = 12f;
+    [SerializeField] private float fadeSpeed      = 10f;
+
+    // ---- Internal state (do not touch in Inspector)
+    private enum PhotoState { None, FadeInAndCenter, MoveToSlotAndBringFrame, SendOffAndFadeOut }
+    private PhotoState photoState = PhotoState.None;
+
+    private Image    activePhoto;
+    private Vector2  targetSlot;           // final anchoredPosition for the photo
+    private Color    _darkColor;           // working color cache
+
+    // Where the frame ends up when leaving (screen width = 1920)
+    private readonly Vector2 frameOffRight = new Vector2(1920f, 0f);
+
+    // Convenience: exponential time-based lerp factor
+    private static float T(float speed) => 1f - Mathf.Exp(-speed * Time.unscaledDeltaTime);
+
+    
     void Update()
     {
+        // Photo overlay runs even when pause toggling is disabled
+        if (photoState != PhotoState.None)
+            PhotoOverlayUpdate();
+        
         if (!pauseScreenAccessable) return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -91,6 +128,159 @@ public class SceneManager : MonoBehaviour
             hiddenIndicator.anchoredPosition = h;
         }
     }
+
+    private void PhotoOverlayUpdate()
+    {
+        // Safety
+        if (activePhoto == null || darkenedBG == null || backgroundImageFrame == null)
+            return;
+
+        var pRT = activePhoto.rectTransform;
+        var fRT = backgroundImageFrame;
+
+        switch (photoState)
+        {
+            // STEP 1: Pause + fade BG in + center photo (0,0). Wait for E.
+            case PhotoState.FadeInAndCenter:
+            {
+                // Fade 0 -> 0.5
+                _darkColor = darkenedBG.color;
+                _darkColor.a = Mathf.Lerp(_darkColor.a, 0.5f, T(fadeSpeed));
+                darkenedBG.color = _darkColor;
+
+                // Move photo to center
+                var p = pRT.anchoredPosition;
+                p = Vector2.Lerp(p, Vector2.zero, T(photoLerpSpeed));
+                pRT.anchoredPosition = p;
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    photoState = PhotoState.MoveToSlotAndBringFrame;
+                }
+                break;
+            }
+
+            // STEP 2: Photo → its slot, Frame → (0,0). Wait for E.
+            case PhotoState.MoveToSlotAndBringFrame:
+            {
+                // Move photo to its slot
+                pRT.anchoredPosition = Vector2.Lerp(pRT.anchoredPosition, targetSlot, T(photoLerpSpeed));
+
+                // Bring frame to center
+                fRT.anchoredPosition = Vector2.Lerp(fRT.anchoredPosition, Vector2.zero, T(frameLerpSpeed));
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    // Snap both before reparent/move
+                    pRT.anchoredPosition = targetSlot;
+                    fRT.anchoredPosition = Vector2.zero;
+
+                    // Make the photo a child of the frame so it travels with it
+                    pRT.SetParent(fRT, true); // keep world pos
+
+                    photoState = PhotoState.SendOffAndFadeOut;
+                }
+                break;
+            }
+
+            // STEP 3: Frame → (1920,0) while BG fades out 0.5 → 0. Then unpause and restore controls.
+            case PhotoState.SendOffAndFadeOut:
+            {
+                // Slide frame to the right
+                fRT.anchoredPosition = Vector2.Lerp(fRT.anchoredPosition, frameOffRight, T(frameLerpSpeed));
+
+                // Fade BG out
+                _darkColor = darkenedBG.color;
+                _darkColor.a = Mathf.Lerp(_darkColor.a, 0f, T(fadeSpeed));
+                darkenedBG.color = _darkColor;
+
+                bool frameDone = (Vector2.Distance(fRT.anchoredPosition, frameOffRight) < 1f);
+                bool fadeDone  = (_darkColor.a <= 0.01f);
+
+                if (frameDone && fadeDone)
+                {
+                    // Clean up
+                    darkenedBG.raycastTarget = false;
+
+                    // Resume play + allow pause toggle again
+                    gameIsPaused = false;
+                    Time.timeScale = 1f;
+                    
+                    pauseScreenAccessable = true;
+
+                    photoState = PhotoState.None;
+                    // (activePhoto remains a child of the frame as requested)
+                }
+                break;
+            }
+        }
+    }
+    
+    public void BeginRoomPhoto(Interactable.RoomColors color)
+    {
+        // Pick the correct image by enum
+        activePhoto = GetPhotoForColor(color);
+        if (activePhoto == null) { Debug.LogWarning("No photo bound for color: " + color); return; }
+
+        // Ensure visible
+        activePhoto.gameObject.SetActive(true);
+
+        // Compute target slot for this enum
+        targetSlot = GetTargetForColor(color);
+
+        // Freeze gameplay & block pause toggling
+        gameIsPaused = true;
+        Time.timeScale = 0f;
+        
+        pauseScreenAccessable = false;
+
+        // Prep dark bg (start transparent)
+        if (darkenedBG != null)
+        {
+            _darkColor = darkenedBG.color;
+            _darkColor.a = 0f;
+            darkenedBG.color = _darkColor;
+            darkenedBG.gameObject.SetActive(true);
+            darkenedBG.raycastTarget = true; // block clicks if you want
+        }
+
+        // Optional: start frame anywhere; it will lerp to (0,0) in step 2
+        // backgroundImageFrame.anchoredPosition = new Vector2(-1920f, 0f);
+
+        photoState = PhotoState.FadeInAndCenter;
+    }
+    
+    private Image GetPhotoForColor(Interactable.RoomColors c)
+    {
+        switch (c)
+        {
+            case Interactable.RoomColors.Red:    return redPhoto;
+            case Interactable.RoomColors.Blue:   return bluePhoto;
+            case Interactable.RoomColors.Teal:   return tealPhoto;
+            case Interactable.RoomColors.Green:  return greenPhoto;
+            case Interactable.RoomColors.Yellow: return yellowPhoto;
+            case Interactable.RoomColors.Mona:   return monaPhoto;
+        }
+        return null;
+    }
+
+    // Slots (anchoredPosition) in enum order:
+    // -647  274 |   0  274 |  647  274
+    // -647 -274 |   0 -274 |  647 -274
+    private Vector2 GetTargetForColor(Interactable.RoomColors c)
+    {
+        switch (c)
+        {
+            case Interactable.RoomColors.Red:    return new Vector2(-647f,  274f);
+            case Interactable.RoomColors.Blue:   return new Vector2(   0f,  274f);
+            case Interactable.RoomColors.Teal:   return new Vector2( 647f,  274f);
+            case Interactable.RoomColors.Green:  return new Vector2(-647f, -274f);
+            case Interactable.RoomColors.Yellow: return new Vector2(   0f, -274f);
+            case Interactable.RoomColors.Mona:   return new Vector2( 647f, -274f);
+        }
+        return Vector2.zero;
+    }
+
     
     void SetGamePaused(bool isPaused)
     {

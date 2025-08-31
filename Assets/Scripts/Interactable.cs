@@ -23,6 +23,18 @@ public class Interactable : MonoBehaviour
     bool hasInteracted = false;
     bool soundPlayed = false;
 
+    public RoomColors roomColor;
+
+    public enum RoomColors
+    {
+        Red,
+        Blue,
+        Teal,
+        Green,
+        Yellow,
+        Mona
+    };
+
     // Update is called once per frame
     void Update()
     {
@@ -86,7 +98,7 @@ public class Interactable : MonoBehaviour
     public virtual void Interact()
     {
         Debug.Log("You ate a biscuit");
-        interactionManager.biscuit();
+        interactionManager.biscuit(roomColor);
     }
 
     // Make function for color of area 

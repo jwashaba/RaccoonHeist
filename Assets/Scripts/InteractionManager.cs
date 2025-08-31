@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
@@ -13,6 +14,15 @@ public class InteractionManager : MonoBehaviour
 
     // called within interactions to only allow the first interact() call in a single frame to run
     // made as a counter against vents teleporting you back instantly
+
+    private int _yellowBiscuitsRemaining = 2;
+    private int _tealBiscuitsRemaining = 2;
+    private int _redBiscuitsRemaining = 5;
+    private int _blueBiscuitsRemaining = 5;
+    private int _greenBiscuitsRemaining = 3;
+    private int _monaBiscuitsRemaining = 1;
+
+    
     public bool TryConsumeInteractPress()
     {
         if (_lastConsumedFrame == Time.frameCount) return false;
@@ -47,9 +57,76 @@ public class InteractionManager : MonoBehaviour
         playerStates.hiddenState = false;
         Debug.Log("You Left");
     }
-    public void biscuit()
+    
+    public void biscuit(Interactable.RoomColors roomColor)
     {
         playerStates.biscuitsAte++;
+
+        switch (roomColor)
+        {
+            case Interactable.RoomColors.Blue:
+                _blueBiscuitsRemaining--;
+
+                if (_blueBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+            case Interactable.RoomColors.Green:
+                _greenBiscuitsRemaining--;
+                
+                if (_greenBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+            case Interactable.RoomColors.Red:
+                _redBiscuitsRemaining--;
+                
+                if (_redBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+            case Interactable.RoomColors.Yellow:
+                _yellowBiscuitsRemaining--;
+                
+                if (_yellowBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+            case Interactable.RoomColors.Teal:
+                _tealBiscuitsRemaining--;
+                
+                if (_tealBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+            case Interactable.RoomColors.Mona:
+                _monaBiscuitsRemaining--;
+                
+                if (_monaBiscuitsRemaining == 0)
+                {
+                    SceneManager.Instance.BeginRoomPhoto(roomColor);
+                    return;
+                }
+                
+                break;
+        }
+        
+        SceneManager.Instance.BiscuitsHUD.BiscuitCounterPopUp(playerStates.biscuitsAte);
     }
 
 }

@@ -87,7 +87,6 @@ public class EnemyMovement : MonoBehaviour
             case 2: enemySR.sprite = idleDown;  break;
             case 3: enemySR.sprite = idleLeft;  break;
         }
-        Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
     }
 
     void SetWalking(int facing)
@@ -100,16 +99,6 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(
-            $"[EnemyMovement] pos={transform.position:F2}, " +
-            $"velRB={enemyRB.linearVelocity:F2}, velAgent={agent.velocity:F2}, " +
-            $"distToPlayer={distToPlayer:F2}, " +
-            $"isChasing={isChasing}, isReturningToPatrol={isReturningToPatrol}, isWaiting={isWaiting}, " +
-            $"animEnabled={animator.enabled}, facing={animator.GetInteger("facingDirection")}, " +
-            $"isWalking={animator.GetBool("isWalking")}, " +
-            $"flashlightAngle={flashlight.angle:F1}, detection={pstates.detection:F2}"
-        );
-        
         // VISUAL INDICATOR ANIMATIONS
         if (isChasing)
         {
@@ -167,7 +156,6 @@ public class EnemyMovement : MonoBehaviour
             if (distToPlayer <= catchDist)
             {
                 // oh no!
-                Debug.Log("player caught");
                 // load lose screen?   
             }
 
@@ -221,7 +209,6 @@ public class EnemyMovement : MonoBehaviour
         if (isWaiting && points.Length > 0)
         {
             enemyRB.linearVelocity = Vector2.zero;
-            Debug.Log("idling 1");
 
             SetIdle();
 

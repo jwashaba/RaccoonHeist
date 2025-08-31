@@ -51,7 +51,7 @@ public class PlayerStates : MonoBehaviour
     }
 
     // Create a function that sets weight according to biscuits
-    void biscuitsAmt(int biscuits)
+    public void biscuitsAmt(int biscuits)
     {
         // Note: Temp Biscuit Amt needed for weight until we all decide
 
@@ -59,26 +59,32 @@ public class PlayerStates : MonoBehaviour
         {
             weight = 1;
         }
-        else if (biscuits == 1)
+        else if (biscuits < 4)
+        {
+            weight = 1;
+        }
+        else if (biscuits < 8)
         {
             weight = 2;
         }
-        else if (biscuits == 2)
+        else if (biscuits < 12)
         {
             weight = 3;
         }
-        else if (biscuits == 3)
+        else if (biscuits < 16)
         {
             weight = 4;
         }
-        else if (biscuits == 4)
+        else if (biscuits < 99)
         {
             weight = 5;
         }
-        else if (biscuits == 5)
+        else
         {
             weight = 6;
         }
+
+        weightPhaseEffect(weight);
     }
 
     public void IncrementDetection(float weight)
@@ -111,6 +117,7 @@ public class PlayerStates : MonoBehaviour
         }
         else if (weight == 6)
         {
+            Debug.Log("HERE");
             movSpeed.moveSpeed = 0f;
         }
     }

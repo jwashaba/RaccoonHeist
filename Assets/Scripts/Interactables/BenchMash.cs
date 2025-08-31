@@ -6,6 +6,7 @@ public class BenchMash : MonoBehaviour
 {
     // Reference PlayerStates for weight blockage
     public PlayerStates pStates;
+    public int weightTreshold = 2; // at this weight or higher, player must button mash
     public int temp;
     public int count;
     // Create Mashing State
@@ -50,30 +51,34 @@ public class BenchMash : MonoBehaviour
     // Function to mash when going into bench
     void benchMash()
     {
+        temp = pStates.biscuitsAte;
+        
         // if passed bench threshold
-        if (pStates.biscuitsAte >= 1)
+        if (pStates.weight >= weightTreshold)
         {
-            temp = pStates.biscuitsAte;
             count = 3 * pStates.weight;
             mashState = true;
-            pStates.biscuitsAte = 5; // set to some maximum that prevents player from moving
+            pStates.biscuitsAte = 99;
             pStates.movSpeed.SetMovementToZero();
             pStates.movSpeed.canDash = false;
             Debug.Log("Set");
         }
         else
         {
-            pStates.hiddenState = true;
+            count = 0;
+            checkMashState();
         }
     }
 
     // Function to check whether in mash state
     void checkMashState()
     {
-        if (count == 0)
+        Debug.Log(count);
+        if (count <= 0)
         {
+            Debug.Log("elo2");
             mashState = false;
-            pStates.biscuitsAte = temp; // set back to previous biscuit quantity
+            pStates.biscuitsAte = temp;
             pStates.movSpeed.canDash = true;
             pStates.hiddenState = true;
         }
