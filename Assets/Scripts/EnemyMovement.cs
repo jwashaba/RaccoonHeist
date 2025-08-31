@@ -87,7 +87,7 @@ public class EnemyMovement : MonoBehaviour
             case 2: enemySR.sprite = idleDown;  break;
             case 3: enemySR.sprite = idleLeft;  break;
         }
-        Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
+        // Debug.Log($"idle sprite set to: {enemySR.sprite?.name} (facing={f})");
     }
 
     void SetWalking(int facing)
@@ -152,7 +152,6 @@ public class EnemyMovement : MonoBehaviour
             if (!animator.enabled) animator.enabled = true;
             animator.SetBool("isWalking", true);
 
-            // optional: face by agent velocity
             Vector2 v = agent.velocity;
             if (v.sqrMagnitude > 0.0001f)
             {
