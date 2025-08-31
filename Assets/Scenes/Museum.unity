@@ -11324,10 +11324,10 @@ PrefabInstance:
     - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: AllSounds.Array.data[2].Clip
       value: 
-      objectReference: {fileID: 8300000, guid: e7c60dd66dad56042a2b33d947c7a8cc, type: 3}
+      objectReference: {fileID: 8300000, guid: 1f1ff6ac4b0965b45a6a43e80a9a7f81, type: 3}
     - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: AllSounds.Array.data[2].Type
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: AllSounds.Array.data[3].Clip
