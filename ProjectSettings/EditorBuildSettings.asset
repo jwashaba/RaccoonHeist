@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TempMuseum2.unity
     guid: 7c69b14e39999a74b872a25c75173cdc
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: aa03be3973356504c8391c404d0787bc
+  - enabled: 1
+    path: Assets/Scenes/LossScene.unity
+    guid: 7fa075cbe1a472c4daae60064cd9ec63
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

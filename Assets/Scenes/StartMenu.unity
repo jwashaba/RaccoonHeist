@@ -1079,6 +1079,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585269253}
   m_CullTransparentMesh: 1
+--- !u!114 &1629961896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5225031564507583896, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+  m_PrefabInstance: {fileID: 1775637838}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15101f865a0f8d446ae9168e425147c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1775637838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1583,7 +1594,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1986880420}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1629961896}
+        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
+        m_MethodName: PauseMenuOpenControlModal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1986880420
 MonoBehaviour:
   m_ObjectHideFlags: 0
