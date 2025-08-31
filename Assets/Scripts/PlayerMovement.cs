@@ -179,6 +179,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canDash)
             {
                 StartCoroutine(DashTiming());
+                SoundManager.Instance.Play(SoundManager.SoundType.Dash);
             }
         }
         else
