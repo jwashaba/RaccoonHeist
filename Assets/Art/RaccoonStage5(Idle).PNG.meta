@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RaccoonStage5(Idle)_0: 5283509740363290397
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

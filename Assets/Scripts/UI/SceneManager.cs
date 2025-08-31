@@ -12,6 +12,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private GameObject playerHUD;
     [SerializeField] public BiscuitHudController BiscuitsHUD;
     [SerializeField] private GameObject loadingMask;
+    [SerializeField] private GameObject cameraScreen;
 
     public bool pauseScreenAccessable = false;
     public bool gameIsPaused = false;
@@ -404,6 +405,8 @@ public class SceneManager : MonoBehaviour
 
                 pauseScreen.SetActive(false);
                 playerHUD.SetActive(false);
+                cameraScreen.SetActive(false);
+                
                 playerStates = null;
 
                 break;
@@ -413,6 +416,7 @@ public class SceneManager : MonoBehaviour
 
                 pauseScreen.SetActive(false);
                 playerHUD.SetActive(true);
+                cameraScreen.SetActive(true);
                 AcquirePlayerStates();
 
                 break;

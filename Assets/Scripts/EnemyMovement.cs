@@ -264,7 +264,7 @@ public class EnemyMovement : MonoBehaviour
 
         // Normalize direction and set velocity
         Vector2 dir = diff.normalized;
-        enemyRB.linearVelocity = dir * moveSpeed;
+        enemyRB.linearVelocity = dir * moveSpeed * Time.deltaTime * 125f;
 
         // move by physics velocity, not manual transform
         // (the rigidbody handles actual position integration)
