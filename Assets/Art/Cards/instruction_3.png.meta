@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a5be68ed681534b489d678bd9c9dab43
+guid: 3919f8d44b401304588af2787b50cb0b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7954313528721442172
-    second: Blue room_0
+      213: -8455765494907188264
+    second: instruction_3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Blue room_0
+      name: instruction_3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 627
-        height: 531
+        width: 1281
+        height: 761
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c758687b206636e60800000000000000
-      internalID: 7954313528721442172
+      spriteID: 8db4d0c351617aa80800000000000000
+      internalID: -8455765494907188264
       vertices: []
       indices: 
       edges: []

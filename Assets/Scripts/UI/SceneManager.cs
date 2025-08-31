@@ -44,6 +44,16 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private float frameLerpSpeed = 12f;
     [SerializeField] private float fadeSpeed = 10f;
 
+    // --- Pause Controls Modal ---
+    [SerializeField] private GameObject PanelMenuImage;    // the main pause menu panel/image
+    [SerializeField] private GameObject controlsScreen;    // the controls modal root
+
+    // One visible Image that swaps sprites (array size = 3)
+    [SerializeField] private UnityEngine.UI.Image controlsImage;
+    [SerializeField] private Sprite[] controlSprites = new Sprite[3]; // index 0..2
+
+    private int controlIndex = 0;
+
 
     [SerializeField] private CinemachineCamera vCam;
     [SerializeField] private Transform vCamTarget;
@@ -221,6 +231,57 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    private void ApplyControlsImage()
+    {
+        if (controlsImage == null || controlSprites == null || controlSprites.Length == 0) return;
+        controlIndex = Mathf.Clamp(controlIndex, 0, controlSprites.Length - 1);
+        controlsImage.sprite = controlSprites[controlIndex];
+    }
+    
+    // Open the Controls modal from the Pause menu
+    public void PauseMenuOpenControlModal()
+    {
+        if (PanelMenuImage != null) PanelMenuImage.SetActive(false);
+        if (controlsScreen != null) controlsScreen.SetActive(true);
+
+        controlIndex = 0;           // start at first page
+        ApplyControlsImage();
+    }
+
+    // BACK button / action
+    public void PauseControlModalBack()
+    {
+        if (controlIndex == 0)
+        {
+            // Close controls, return to pause menu
+            if (PanelMenuImage != null) PanelMenuImage.SetActive(true);
+            if (controlsScreen != null) controlsScreen.SetActive(false);
+            controlIndex = 0; // reset for next open
+            return;
+        }
+
+        controlIndex = Mathf.Max(0, controlIndex - 1);
+        ApplyControlsImage();
+    }
+
+    // NEXT button / action
+    public void PauseControlModalNext()
+    {
+        int last = Mathf.Max(0, (controlSprites?.Length ?? 3) - 1); // default to 2 if null
+        if (controlIndex >= last) // index == 2 for a 3-item array
+        {
+            // Close controls, return to pause menu
+            if (PanelMenuImage != null) PanelMenuImage.SetActive(true);
+            if (controlsScreen != null) controlsScreen.SetActive(false);
+            controlIndex = 0; // reset for next open
+            return;
+        }
+
+        controlIndex = Mathf.Min(last, controlIndex + 1);
+        ApplyControlsImage();
+    }
+
+    
     public void BeginRoomPhoto(Interactable.RoomColors color)
     {
         // Pick the correct image by enum
@@ -287,7 +348,7 @@ public class SceneManager : MonoBehaviour
     }
 
 
-    void SetGamePaused(bool isPaused)
+    public void SetGamePaused(bool isPaused)
     {
         gameIsPaused = isPaused;
 
