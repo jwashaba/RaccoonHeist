@@ -11305,6 +11305,54 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[0].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e5c918ef02824b14ebbfa48b4e21b17a, type: 3}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[1].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c216331c1533fa84787901ed0fd49e8c, type: 3}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[1].Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[2].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e7c60dd66dad56042a2b33d947c7a8cc, type: 3}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[2].Type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[3].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c47d9ae0a69c5944b600d30a106cf61, type: 3}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[3].Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[0].Volume
+      value: 0.717
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[1].Volume
+      value: 0.108
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[2].Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812151721707057814, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: AllSounds.Array.data[3].Volume
+      value: 0.351
+      objectReference: {fileID: 0}
     - target: {fileID: 2964638087832402114, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11417,7 +11465,10 @@ PrefabInstance:
     - {fileID: 8875205294874629507, guid: c3aa3216204634e4594f764382ba537a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6713053291422777344, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1290725114}
   m_SourcePrefab: {fileID: 100100000, guid: c3aa3216204634e4594f764382ba537a, type: 3}
 --- !u!1001 &407980653
 PrefabInstance:
@@ -20390,6 +20441,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9fde5704ccd66d4ca561bc6db94676b, type: 3}
+--- !u!1 &1290725110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6713053291422777344, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+  m_PrefabInstance: {fileID: 401260569}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1290725114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290725110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d97e454efcd224479fe08a37f020058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1294023639
 GameObject:
   m_ObjectHideFlags: 0
