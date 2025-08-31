@@ -21,7 +21,7 @@ public class InteractionManager : MonoBehaviour
     private int _blueBiscuitsRemaining = 5;
     private int _greenBiscuitsRemaining = 3;
     private int _monaBiscuitsRemaining = 1;
-    private int _totalBiscuitsRemaining = 17; // not including mona
+    private int _totalBiscuitsRemaining = 1; // not including mona
     [SerializeField] private GameObject electricalDoor;
     [SerializeField] private Transform doorFocusTarget;
     [SerializeField] private float doorFocusSeconds = 2f;
@@ -68,7 +68,7 @@ public class InteractionManager : MonoBehaviour
         playerStates.biscuitsAte++;
         _totalBiscuitsRemaining--;
 
-        if (_totalBiscuitsRemaining == 0)
+        if (_totalBiscuitsRemaining <= 0)
         {
             StartCoroutine(OpenElectricalDoor());
         }
@@ -146,6 +146,6 @@ public class InteractionManager : MonoBehaviour
         while (sm != null && sm.IsPhotoOverlayActive)
             yield return null;
         electricalDoor.SetActive(false);
-        sm?.FocusCameraForSeconds(doorFocusTarget, doorFocusSeconds);
+        sm.FocusCameraForSeconds(doorFocusTarget, doorFocusSeconds);
     }
 }
