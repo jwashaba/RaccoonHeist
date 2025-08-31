@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4808f9b0697644a408504ed9cc8e8f41
+guid: c6cd089ccdd17b24e8d603f89bc7ee12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8829877476116926503
-    second: Vent_0
+      213: -2427033680979459967
+    second: Electrical door_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,10 +46,10 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -74,7 +74,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Vent_0
+      name: Electrical door_0
       rect:
         serializedVersion: 2
-        x: 109
-        y: 138
-        width: 277
-        height: 215
+        x: 0
+        y: 0
+        width: 1090
+        height: 1080
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7201c2628c60a8a70800000000000000
-      internalID: 8829877476116926503
+      spriteID: 1808f43e9b1715ed0800000000000000
+      internalID: -2427033680979459967
       vertices: []
       indices: 
       edges: []
@@ -125,17 +125,19 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: dee624490a808d640ba687f950b0b6a1
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1090.0,"y":1080.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Vent_0: 8829877476116926503
+      Electrical door_0: -2427033680979459967
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
