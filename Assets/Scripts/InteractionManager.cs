@@ -21,7 +21,7 @@ public class InteractionManager : MonoBehaviour
     private int _blueBiscuitsRemaining = 5;
     private int _greenBiscuitsRemaining = 3;
     private int _monaBiscuitsRemaining = 1;
-    private int _totalBiscuitsRemaining = 1; // not including mona
+    private int _totalBiscuitsRemaining = 17; // not including mona
     [SerializeField] private GameObject electricalDoor;
     [SerializeField] private Transform doorFocusTarget;
     [SerializeField] private float doorFocusSeconds = 2f;

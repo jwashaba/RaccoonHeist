@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c6cd089ccdd17b24e8d603f89bc7ee12
+guid: 7bebacf5a6d4872479752f8edef5ab49
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2427033680979459967
-    second: Electrical door_0
+      213: 3235608820635112157
+    second: Electrical box_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Electrical door_0
+      name: Electrical box_0
       rect:
         serializedVersion: 2
-        x: 280
-        y: 88
-        width: 530
-        height: 903
+        x: 128
+        y: 91
+        width: 242
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1808f43e9b1715ed0800000000000000
-      internalID: -2427033680979459967
+      spriteID: dd29312541137ec20800000000000000
+      internalID: 3235608820635112157
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dee624490a808d640ba687f950b0b6a1
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -133,13 +133,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":500.0,"y":500.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
-      - key: SpriteEditor.SliceOnImport
-        value: False
+      entries: []
     nameFileIdTable:
-      Electrical door_0: -2427033680979459967
+      Electrical box_0: 3235608820635112157
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
