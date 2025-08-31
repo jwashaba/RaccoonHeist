@@ -58,7 +58,7 @@ public class SceneManager : MonoBehaviour
     private Color _darkColor;           // working color cache
 
     // Where the frame ends up when leaving (screen width = 1920)
-    private readonly Vector2 frameOffRight = new Vector2(1920f, 0f);
+    private readonly Vector2 frameOffRight = new Vector2(1925f, 0f);
 
     // Convenience: exponential time-based lerp factor
     private static float T(float speed) => 1f - Mathf.Exp(-speed * Time.unscaledDeltaTime);
