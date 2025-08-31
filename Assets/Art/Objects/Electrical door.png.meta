@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: f85d7ec576076304b96faa56f8e90f18
+guid: c6cd089ccdd17b24e8d603f89bc7ee12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7900739378627584582
-    second: counter_3_0
-  - first:
-      213: -7473705688758540304
-    second: counter_3_1
-  - first:
-      213: 2130622417123881374
-    second: counter_3_2
+      213: -2427033680979459967
+    second: Electrical door_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -80,7 +74,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -106,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: counter_3_0
+      name: Electrical door_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 180
-        height: 197
+        width: 1090
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: abd56f1256fea5290800000000000000
-      internalID: -7900739378627584582
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: counter_3_1
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 82
-        width: 194
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0f72bb10640184890800000000000000
-      internalID: -7473705688758540304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: counter_3_2
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 0
-        width: 224
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e913723cccd719d10800000000000000
-      internalID: 2130622417123881374
+      spriteID: 1808f43e9b1715ed0800000000000000
+      internalID: -2427033680979459967
       vertices: []
       indices: 
       edges: []
@@ -175,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: dee624490a808d640ba687f950b0b6a1
     internalID: 0
     vertices: []
     indices: 
@@ -183,11 +133,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1090.0,"y":1080.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      counter_3_0: -7900739378627584582
-      counter_3_1: -7473705688758540304
-      counter_3_2: 2130622417123881374
+      Electrical door_0: -2427033680979459967
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
