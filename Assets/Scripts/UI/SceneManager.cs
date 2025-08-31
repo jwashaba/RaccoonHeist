@@ -55,6 +55,8 @@ public class SceneManager : MonoBehaviour
     private int controlIndex = 0;
 
 
+    public GameObject escapeRope;
+    
     [SerializeField] private CinemachineCamera vCam;
     [SerializeField] private Transform vCamTarget;
     public bool IsPhotoOverlayActive => photoState != PhotoState.None;
@@ -233,6 +235,7 @@ public class SceneManager : MonoBehaviour
 
     private void ApplyControlsImage()
     {
+        SoundManager.Instance.Play(SoundManager.SoundType.left_click);
         if (controlsImage == null || controlSprites == null || controlSprites.Length == 0) return;
         controlIndex = Mathf.Clamp(controlIndex, 0, controlSprites.Length - 1);
         controlsImage.sprite = controlSprites[controlIndex];
@@ -314,6 +317,12 @@ public class SceneManager : MonoBehaviour
         // backgroundImageFrame.anchoredPosition = new Vector2(-1920f, 0f);
 
         photoState = PhotoState.FadeInAndCenter;
+
+        if (color == Interactable.RoomColors.Mona)
+        {
+            escapeRope.SetActive(true);
+            vCamTarget = escapeRope.transform;
+        }
     }
 
     private Image GetPhotoForColor(Interactable.RoomColors c)
