@@ -24,8 +24,7 @@ public class PlayerStates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(detection);
-        
+
         if (hiddenState)
         {
             _sp.color = Color.grey;
@@ -36,13 +35,6 @@ public class PlayerStates : MonoBehaviour
             _sp.color = Color.white;
         }
         
-        // Test key for biscuits eaten for now
-        CooldownTime -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && CooldownTime <= 0f)
-        {
-            CooldownTime = 3.0f;
-            // biscuitsAte++;
-        }
         biscuitsAmt(biscuitsAte);
         weightPhaseEffect(weight);
 

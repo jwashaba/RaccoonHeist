@@ -22,7 +22,6 @@ public class Interactable : MonoBehaviour
     // Make variable if obj has been interacted with
     bool hasInteracted = false;
     bool soundPlayed = false;
-
     public RoomColors roomColor;
 
     public enum RoomColors
@@ -46,20 +45,21 @@ public class Interactable : MonoBehaviour
                 Debug.Log("get it");
                 interactionManager.EnablePawIcon();
             }
-             if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
+            if (Input.GetKey(KeyCode.E) && interactionManager.TryConsumeInteractPress())
             {
                 Debug.Log("work");
+
                 if (holdDuration < 3f)
                 {
                     if (soundPlayed == false)
                     {
                         SoundManager.Instance.Play(SoundManager.SoundType.BiscuitSwipe);
-                        
+
                         soundPlayed = true;
                     }
                     holdDuration += Time.deltaTime;
                     interactionManager.SetPawIcon(holdDuration / 3f);
-                    Debug.Log("Holding"); 
+                    Debug.Log("Holding");
                 }
                 else
                 {
