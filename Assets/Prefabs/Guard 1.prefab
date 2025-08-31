@@ -162,6 +162,8 @@ MonoBehaviour:
   flashlight: {fileID: 6331906169636696139}
   indicatorTransform: {fileID: 0}
   indicatorSR: {fileID: 372491588688858715}
+  exclamationIndicator: {fileID: 21300000, guid: 2777f4e53fc19ae47bdd56ba60356e3a, type: 3}
+  questionIndicator: {fileID: 21300000, guid: 521ca83da7ebee94c9111e72b8277329, type: 3}
 --- !u!195 &3068071496338518142
 NavMeshAgent:
   m_ObjectHideFlags: 0

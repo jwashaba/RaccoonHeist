@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3189809495790571463}
   - component: {fileID: 1961518274455122862}
   - component: {fileID: 7982884981571756145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bench Mash Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6002148298658668835}
   - component: {fileID: 7146296172539693707}
   - component: {fileID: 4514141452509523268}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hidden Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ BoxCollider2D:
   m_Offset: {x: -3.19, y: 2.41}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5025139, y: -1.400728}
+    pivot: {x: 0.5075412, y: -0.5432569}
     oldSize: {x: 7.05, y: 1.86}
     newSize: {x: 0.875, y: 1.8125}
     adaptiveTilingThreshold: 0.5
@@ -375,7 +375,7 @@ BoxCollider2D:
   m_Offset: {x: 3.13, y: 2.41}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5025139, y: -1.400728}
+    pivot: {x: 0.5075412, y: -0.5432569}
     oldSize: {x: 7.05, y: 1.86}
     newSize: {x: 0.875, y: 1.8125}
     adaptiveTilingThreshold: 0.5

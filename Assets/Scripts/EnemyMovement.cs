@@ -41,6 +41,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Transform indicatorTransform;
     [SerializeField] SpriteRenderer indicatorSR;
     private float flashlightAngle;
+
+    public Sprite exclamationIndicator;
+    public Sprite questionIndicator;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -97,9 +100,28 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(
+            $"[EnemyMovement] pos={transform.position:F2}, " +
+            $"velRB={enemyRB.linearVelocity:F2}, velAgent={agent.velocity:F2}, " +
+            $"distToPlayer={distToPlayer:F2}, " +
+            $"isChasing={isChasing}, isReturningToPatrol={isReturningToPatrol}, isWaiting={isWaiting}, " +
+            $"animEnabled={animator.enabled}, facing={animator.GetInteger("facingDirection")}, " +
+            $"isWalking={animator.GetBool("isWalking")}, " +
+            $"flashlightAngle={flashlight.angle:F1}, detection={pstates.detection:F2}"
+        );
+        
         // VISUAL INDICATOR ANIMATIONS
         if (isChasing)
         {
+            indicatorSR.sprite = exclamationIndicator;
+            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
+            // pulse goes 0 → 1
+            float scale = Mathf.Lerp(2f, 3f, pulse);
+            indicatorTransform.localScale = new Vector3(scale, scale, 1f);
+        }
+        else if (isReturningToPatrol)
+        {
+            indicatorSR.sprite = questionIndicator;
             float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
             // pulse goes 0 → 1
             float scale = Mathf.Lerp(2f, 3f, pulse);
@@ -116,17 +138,15 @@ public class EnemyMovement : MonoBehaviour
         {
             if (distToPlayer <= chaseRadius && pstates.detection >= 1f)
             {
-                Debug.Log("starting chase");
                 isChasing = true;
                 isWaiting = false;
                 waitTimer = 0f;
-                if (!agent.enabled) agent.enabled = true;
+                EnableAgent();
             }
         }
         else if (isChasing)
         {
-            if (!agent.enabled) agent.enabled = true;
-            enemyRB.linearVelocity = Vector2.zero;
+            EnableAgent(); // idempotent
             agent.SetDestination(player.position);
 
             if (!animator.enabled) animator.enabled = true;
@@ -153,18 +173,12 @@ public class EnemyMovement : MonoBehaviour
 
             if (pstates.detection <= 0f)
             {
-                Debug.Log("ending chase");
-                isReturningToPatrol = true;
                 isChasing = false;
-                // agent.ResetPath();
-                // agent.enabled = false;
-
-                Vector3 targetPatrolPos = points[currPoint].position;
-                agent.SetDestination(targetPatrolPos);
-
+                isReturningToPatrol = true;
+                // Send agent back to current patrol node
+                agent.SetDestination(points[currPoint].position);
                 return;
             }
-
             return;
         }
 
@@ -191,22 +205,19 @@ public class EnemyMovement : MonoBehaviour
             // if (Vector3.Distance(agent.transform.position, agent.nextPosition) < 0.001f)
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
-                // Snap to the agent's nextPosition for cleanliness
-                transform.position = agent.nextPosition;
-                agent.ResetPath();
-                agent.enabled = false;
-
+                // Agent done → hand back to RB patrol
+                DisableAgent();
                 isReturningToPatrol = false;
-                isWaiting = true; // optional: pause at the node
+                isWaiting = true;
                 waitTimer = 0f;
                 animator.SetBool("isWalking", false);
-                Debug.Log("idling 2");
                 SetIdle();
             }
-
             return;
         }
 
+        if (agent.enabled) DisableAgent();
+        
         if (isWaiting && points.Length > 0)
         {
             enemyRB.linearVelocity = Vector2.zero;
@@ -278,6 +289,41 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
+    
+    void EnableAgent()
+    {
+        if (!agent.enabled) agent.enabled = true;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        agent.updatePosition = true; // agent moves transform
+        agent.stoppingDistance = catchDist;
+        agent.speed = chaseSpeed;
+
+        // Take RB out of the sim during agent control
+        enemyRB.linearVelocity = Vector2.zero;
+        enemyRB.isKinematic = true;         // or enemyRB.simulated = false;
+    
+        // Optional: reduce weird circling
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        // Or keep avoidance but stagger priorities per enemy (0..99). Lower = higher priority.
+        // agent.avoidancePriority = UnityEngine.Random.Range(20, 80);
+    }
+
+    void DisableAgent()
+    {
+        if (agent.enabled)
+        {
+            // Snap once, then stop the agent from moving the transform
+            transform.position = agent.nextPosition;
+            agent.ResetPath();
+            agent.enabled = false;
+        }
+
+        // Give control back to Rigidbody2D
+        enemyRB.isKinematic = false;        // or enemyRB.simulated = true;
+        enemyRB.linearVelocity = Vector2.zero;
+    }
+
 }
 
 
