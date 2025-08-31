@@ -164,7 +164,12 @@ public class EnemyMovement : MonoBehaviour
             if (distToPlayer <= catchDist)
             {
                 // oh no!
-                // load lose screen?   
+                SceneManager.Instance.gameIsPaused = true;
+                Time.timeScale = 0f;
+                isChasing = false;
+                SceneManager.Instance.LoadScene("LossScene");
+                Destroy(this);
+                return;
             }
 
             if (pstates.detection <= 0f)
