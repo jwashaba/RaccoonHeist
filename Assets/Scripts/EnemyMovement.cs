@@ -41,6 +41,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Transform indicatorTransform;
     [SerializeField] SpriteRenderer indicatorSR;
     private float flashlightAngle;
+    bool soundAlert = false;
+    bool hasInteracted = false;
 
     public Sprite exclamationIndicator;
     public Sprite questionIndicator;
@@ -103,7 +105,13 @@ public class EnemyMovement : MonoBehaviour
         // VISUAL INDICATOR ANIMATIONS
         if (isChasing)
         {
-            indicatorSR.sprite = exclamationIndicator;
+            soundAlert = true;
+            if (soundAlert == true && hasInteracted == false)
+            {
+                SoundManager.Instance.Play(SoundManager.SoundType.Alert);
+                hasInteracted = true;
+            }
+                indicatorSR.sprite = exclamationIndicator;
             float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
             // pulse goes 0 → 1
             float scale = Mathf.Lerp(2f, 3f, pulse);
@@ -172,6 +180,8 @@ public class EnemyMovement : MonoBehaviour
 
         if (isReturningToPatrol)
         {
+            soundAlert = true;
+            hasInteracted = false;
             // optional: face by agent velocity
             Vector2 v = agent.velocity;
             if (v.sqrMagnitude > 0.0001f)
