@@ -235,6 +235,7 @@ public class SceneManager : MonoBehaviour
 
     private void ApplyControlsImage()
     {
+        SoundManager.Instance.Play(SoundManager.SoundType.left_click);
         if (controlsImage == null || controlSprites == null || controlSprites.Length == 0) return;
         controlIndex = Mathf.Clamp(controlIndex, 0, controlSprites.Length - 1);
         controlsImage.sprite = controlSprites[controlIndex];

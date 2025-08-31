@@ -143,6 +143,7 @@ public class InteractionManager : MonoBehaviour
     private IEnumerator OpenElectricalDoor()
     {
         var sm = SceneManager.Instance;
+        yield return null;
         while (sm != null && sm.IsPhotoOverlayActive)
             yield return null;
         electricalDoor.SetActive(false);
