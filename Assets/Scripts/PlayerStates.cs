@@ -15,16 +15,27 @@ public class PlayerStates : MonoBehaviour
     public bool hiddenState = false;
     public float detection = 0f;
     private float CooldownTime = 0f;
+    public bool mashState;
+    [SerializeField] private GameObject eKey;
 
     void Start()
     {
         _sp = GetComponent<SpriteRenderer>();
+        eKey.SetActive(false);
     }
     
     // Update is called once per frame
     void Update()
     {
-
+        if (mashState)
+        {
+            eKey.SetActive(true);
+        }
+        else
+        {
+            eKey.SetActive(false);
+        }
+        
         if (hiddenState)
         {
             _sp.color = Color.grey;

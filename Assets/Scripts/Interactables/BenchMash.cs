@@ -58,6 +58,7 @@ public class BenchMash : MonoBehaviour
         {
             count = 3 * pStates.weight;
             mashState = true;
+            pStates.mashState = true;
             pStates.biscuitsAte = 99;
             pStates.movSpeed.SetMovementToZero();
             pStates.movSpeed.canDash = false;
@@ -78,6 +79,7 @@ public class BenchMash : MonoBehaviour
         {
             Debug.Log("elo2");
             mashState = false;
+            pStates.mashState = false;
             pStates.biscuitsAte = temp;
             pStates.movSpeed.canDash = true;
             pStates.hiddenState = true;
