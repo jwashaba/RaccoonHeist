@@ -5775,7 +5775,7 @@ GameObject:
   - component: {fileID: 190649453}
   - component: {fileID: 190649455}
   - component: {fileID: 190649454}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: e_key_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11512,6 +11512,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3580539886050605574, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580539886050605574, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -11591,6 +11595,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5831109630726245137, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831109630726245137, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5897749565201935273, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -11601,6 +11613,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343000385717322748, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6343000385717322748, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6343000385717322748, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6346832491335218185, guid: c3aa3216204634e4594f764382ba537a, type: 3}
@@ -11657,6 +11677,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9003604565222170898, guid: c3aa3216204634e4594f764382ba537a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003604565222170898, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003604565222170898, guid: c3aa3216204634e4594f764382ba537a, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

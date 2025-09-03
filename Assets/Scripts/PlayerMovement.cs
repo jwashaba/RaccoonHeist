@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashTime;
     public float dashCooldown;
     public bool canDash = true;
+    public bool benchMashing = false;
     private bool isDashing = false;
     private Vector2 dashDir = Vector2.down;
     private int lastDir = 2;
@@ -208,7 +209,15 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
+        
+        if (benchMashing)
+        {
+            canDash = false;
+        }
+        else
+        {
+            canDash = true;
+        }
     }
     
     public void SetMovementToZero()

@@ -62,6 +62,7 @@ public class BenchMash : MonoBehaviour
             pStates.biscuitsAte = 99;
             pStates.movSpeed.SetMovementToZero();
             pStates.movSpeed.canDash = false;
+            pStates.movSpeed.benchMashing = true;
             Debug.Log("Set");
         }
         else
@@ -83,6 +84,7 @@ public class BenchMash : MonoBehaviour
             pStates.biscuitsAte = temp;
             pStates.movSpeed.canDash = true;
             pStates.hiddenState = true;
+            pStates.movSpeed.benchMashing = false;
         }
     }
 }
