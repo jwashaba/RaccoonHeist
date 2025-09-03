@@ -111,8 +111,9 @@ public class EnemyMovement : MonoBehaviour
                 SoundManager.Instance.Play(SoundManager.SoundType.Alert);
                 hasInteracted = true;
             }
-                indicatorSR.sprite = exclamationIndicator;
-            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
+
+            indicatorSR.sprite = exclamationIndicator;
+            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f;
             // pulse goes 0 → 1
             float scale = Mathf.Lerp(2f, 3f, pulse);
             indicatorTransform.localScale = new Vector3(scale, scale, 1f);
@@ -120,7 +121,7 @@ public class EnemyMovement : MonoBehaviour
         else if (isReturningToPatrol)
         {
             indicatorSR.sprite = questionIndicator;
-            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f; 
+            float pulse = (Mathf.Cos(Time.time * 5f) + 1f) * 0.5f;
             // pulse goes 0 → 1
             float scale = Mathf.Lerp(2f, 3f, pulse);
             indicatorTransform.localScale = new Vector3(scale, scale, 1f);
@@ -129,7 +130,10 @@ public class EnemyMovement : MonoBehaviour
         {
             indicatorTransform.localScale = new Vector3(0f, 0f, 1f);
         }
-        
+    }
+    
+    void FixedUpdate()
+    {
         distToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (!isChasing && !isReturningToPatrol)
@@ -264,7 +268,7 @@ public class EnemyMovement : MonoBehaviour
 
         // Normalize direction and set velocity
         Vector2 dir = diff.normalized;
-        enemyRB.linearVelocity = dir * moveSpeed * Time.deltaTime * 125f;
+        enemyRB.linearVelocity = dir * moveSpeed;
 
         // move by physics velocity, not manual transform
         // (the rigidbody handles actual position integration)
