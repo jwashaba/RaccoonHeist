@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,19 +10,20 @@ public class IntroCardScene : MonoBehaviour
     public Image CardC;
 
     private Image nextCard;
+    private bool isAnimating = false;
 
     private async void Start()
     {
         // Ensure these Images use Image.type = Filled in the Inspector.
-        CardA.fillAmount = 0f;
-        CardB.fillAmount = 0f;
-        CardC.fillAmount = 0f;
+        if (CardA) CardA.fillAmount = 0f;
+        if (CardB) CardB.fillAmount = 0f;
+        if (CardC) CardC.fillAmount = 0f;
 
         nextCard = CardA;
 
-        // Wait 0.5 seconds before filling the first card
+        // Small intro delay
         await Task.Delay(500);
-        StartCoroutine(FillCardThenAdvance());
+        TryStartFill();
     }
 
     void Update()
@@ -36,34 +36,59 @@ public class IntroCardScene : MonoBehaviour
                 return;
             }
 
-            StartCoroutine(FillCardThenAdvance());
+            TryStartFill();
         }
+    }
+
+    private void TryStartFill()
+    {
+        if (isAnimating) return;
+        if (nextCard == null) return;
+        StartCoroutine(FillCardThenAdvance());
     }
 
     private IEnumerator FillCardThenAdvance()
     {
+        isAnimating = true;
+
+        // Take a snapshot so this coroutine isn't affected by changes to nextCard.
+        Image card = nextCard;
+        if (card == null)
+        {
+            isAnimating = false;
+            yield break;
+        }
+
+        // Safety: if someone forgot to set type to Filled, we avoid NREs and do nothing.
+        if (card.type != Image.Type.Filled)
+        {
+            Debug.LogWarning($"{card.name} Image.type should be 'Filled' for fillAmount animation.");
+        }
+
         float t = 0f;
-        float start = 0f;
-        float end = 1f;
+        const float dur = 0.5f;
 
-        nextCard.fillAmount = 0f;
+        card.fillAmount = 0f;
 
-        while (t < 0.5f)
+        while (t < dur)
         {
             t += Time.deltaTime;
-            float u = Mathf.Clamp01(t / 0.5f);
-            nextCard.fillAmount = Mathf.Lerp(start, end, u);
+            float u = Mathf.Clamp01(t / dur);
+            // Use the snapshot 'card' — NOT 'nextCard'
+            card.fillAmount = Mathf.Lerp(0f, 1f, u);
             yield return null;
         }
 
-        nextCard.fillAmount = 1f;
+        card.fillAmount = 1f;
 
-        // Advance the pointer
-        if (nextCard == CardA)
-            nextCard = CardB;
-        else if (nextCard == CardB)
-            nextCard = CardC;
-        else if (nextCard == CardC)
-            nextCard = null;
+        // Advance pointer AFTER animation completes
+        if (nextCard == card) // only advance if we’re still the active one
+        {
+            if (nextCard == CardA)      nextCard = CardB;
+            else if (nextCard == CardB) nextCard = CardC;
+            else if (nextCard == CardC) nextCard = null;
+        }
+
+        isAnimating = false;
     }
 }

@@ -417,12 +417,42 @@ public class SceneManager : MonoBehaviour
                 pauseScreen.SetActive(false);
                 playerHUD.SetActive(true);
                 cameraScreen.SetActive(true);
+                resetCameras();
                 AcquirePlayerStates();
 
                 break;
         }
     }
 
+    void resetCameras()
+    {
+        if (cameraScreen == null) return;
+
+        // Order: yellow, teal, red, blue, green, mona
+        Image[] ordered = { yellowPhoto, tealPhoto, redPhoto, bluePhoto, greenPhoto, monaPhoto };
+
+        foreach (var img in ordered)
+        {
+            if (img == null) continue;
+
+            RectTransform rt = img.rectTransform;
+
+            // Reparent to CameraScreen and place at the end of its children list
+            rt.SetParent(cameraScreen.transform, false); // false = set as local (keeps anchors)
+            rt.SetAsLastSibling();
+
+            // Put at (0, -900) in local/anchored space
+            rt.anchoredPosition = new Vector2(0f, -900f);
+
+            // (Optional safety) normalize scale/rotation in case they drifted
+            rt.localScale = Vector3.one;
+            rt.localRotation = Quaternion.identity;
+
+            // Ensure visible if these should show
+            img.gameObject.SetActive(true);
+        }
+    }
+    
     private async Task CloseSceneToLoad()
     {
         float duration = 0.625f;   // seconds
